@@ -1,16 +1,19 @@
 // <------- Imports ------->
 
 const { Router } = require("express");
-const { createUser, readUsers, deleteUser, updateUser } = require("./userControllers");
+const { createUser, readUsers, deleteUser, updateUser, loginUser } = require("./userControllers");
+const { hashPass, tokenCheck, comparePassword } = require("../middleware/index")
 
 // <------- Routes ------->
 
 const userRouter = Router();
 
-userRouter.post("/createUser", createUser);
-userRouter.get("/readUsers", readUsers );
-userRouter.put("/updateUser", updateUser );
-userRouter.delete("/deleteUser", deleteUser );
+userRouter.post("/createUser", hashPass, createUser);
+userRouter.post("/loginUser", comparePassword, loginUser )
+userRouter.get("/loginUser", tokenCheck, loginUser )
+userRouter.get("/readUsers", tokenCheck, readUsers );
+userRouter.put("/updateUser", tokenCheck, updateUser );
+userRouter.delete("/deleteUser", tokenCheck, deleteUser );
 
 // <------- Exports ------->
 

@@ -18,6 +18,18 @@ exports.hashPass = async ( req, res, next ) => {
     }
 }
 
+exports.hashPass2 = async ( req, res, next ) => {
+    try {
+        console.log(req.body.update.password)
+        req.body.update.password = await bcrypt.hash(req.body.update.password, 8);
+        next();
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send({ error: error.message });
+    }
+}
+
 exports.tokenCheck = async ( req, res, next ) => {
     try {
         const token = req.header("Authorization");
@@ -39,7 +51,7 @@ exports.comparePassword = async ( req, res, next) => {
             next()
         }
         else {
-            throw new Error ("Incorrect user ID or password")
+            throw new Error ("Incorrect username, email or password")
         }
         next()
     }

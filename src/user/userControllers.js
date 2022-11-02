@@ -31,11 +31,11 @@ exports.readUsers = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         await User.updateOne(req.body.filter, {$set: req.body.update});
-        res.status(200).send({previousUser: req.body.filter, newUser: req.body.update });
+        res.status(200).send({message: "User details updated" });
     }
     catch (error) {
         console.log(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send({message: "Failed to change details"});
     }
 }
 
@@ -57,6 +57,6 @@ exports.loginUser = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send({error: error.message, message: "Log-in details incorrect"});
     }
 }

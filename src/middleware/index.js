@@ -47,7 +47,7 @@ exports.tokenCheck = async ( req, res, next ) => {
 exports.comparePassword = async ( req, res, next) => {
     try {
         req.user = await User.findOne({username: req.body.username})
-        if (req.user && await bcrypt.compare(req.body.password, req.user.password)) {
+        if (req.user && await bcrypt.compare(req.body.password, req.user.password) && (req.body.email === req.user.email)) {
             next()
         }
         else {

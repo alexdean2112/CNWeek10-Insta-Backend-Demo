@@ -13,7 +13,7 @@ exports.createUser = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send({message: "User already exists"});
     }
 };
 
